@@ -12,10 +12,21 @@
     <!--表单组件-->
     <el-dialog append-to-body :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="500px">
       <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
-        <el-form-item label="分类名称">
+    <!--    <el-form-item label="分类名称">
           <el-input v-model="form.cateName" style="width: 370px;" />
+        </el-form-item>-->
+        <el-form-item label="序号">
+          <el-input v-model="form.orderNo" style="width: 370px;" />
         </el-form-item>
-        <el-form-item label="分类图片">
+        <el-form-item label="分类名称">
+          <el-input v-model="form.productName" style="width: 370px;" />
+        </el-form-item>
+        <el-form-item label="分类描述">
+          <el-input v-model="form.productName" style="width: 370px;" />
+        </el-form-item>
+
+
+     <!--   <el-form-item label="分类图片">
           <MaterialList v-model="picArr" type="image" :num="1" :width="150" :height="150" />
         </el-form-item>
         <el-form-item label="状态">
@@ -29,7 +40,7 @@
         </el-form-item>
         <el-form-item style="margin-bottom: 0;" label="上级分类" prop="pid">
           <treeselect v-model="form.pid" :options="depts" style="width: 370px;" placeholder="选择上级分类" />
-        </el-form-item>
+        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="text" @click="crud.cancelCU">取消</el-button>
@@ -39,16 +50,19 @@
     <!--表格渲染-->
     <el-table ref="table" v-loading="crud.loading" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" :data="crud.data" row-key="id" @select="crud.selectChange" @select-all="crud.selectAllChange" @selection-change="crud.selectionChangeHandler">
       <el-table-column :selectable="checkboxT" type="selection" width="55" />
-      <el-table-column v-if="columns.visible('cateName')" label="名称" prop="cateName" />
-      <el-table-column v-if="columns.visible('isShow')" label="状态" align="center" prop="isShow">
-        <template slot-scope="scope">
+ <!--     <el-table-column v-if="columns.visible('cateName')" label="名称" prop="cateName" />
+      <el-table-column v-if="columns.visible('isShow')" label="状态" align="center" prop="isShow">-->
+        <el-table-column v-if="columns.visible('orderNo')" label="序号" prop="orderNo" />
+        <el-table-column v-if="columns.visible('productName')" label="名称" prop="productName" />
+        <el-table-column v-if="columns.visible('productDescribe')" label="描述" align="center" prop="productDescribe">
+        <!--<template slot-scope="scope">
           <div>
             <el-tag v-if="scope.row.isShow === 1" :type="''">显示</el-tag>
             <el-tag v-else :type=" 'info' ">隐藏</el-tag>
           </div>
-        </template>
+        </template>-->
       </el-table-column>
-      <el-table-column v-if="columns.visible('sort')" label="排序" prop="sort" sortable/>
+      <!--<el-table-column v-if="columns.visible('sort')" label="排序" prop="sort" sortable/>-->
       <el-table-column v-permission="['admin','YXSTORECATEGORY_EDIT','YXSTORECATEGORY_DELETE']" label="操作" width="130px" align="center" fixed="right">
         <template slot-scope="scope">
           <udOperation
